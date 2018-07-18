@@ -1,19 +1,23 @@
 buildscript {
   ext {
     springBootVersion         = '2.0.3.RELEASE'
+    springCloudVersion        = 'Finchley.RELEASE'
     springfoxSwaggerVersion   = '2.8.0'
     palantirPluginVersion     = '0.20.1'
   }
   repositories {
-    //mavenCentral()
-    maven { url "http://nexus:8080/nexus/content/groups/public/" }
+    mavenCentral()
+    //maven { url "http://nexus:8080/nexus/content/groups/public/" }
     maven { url "https://plugins.gradle.org/m2/" }
   }
   dependencies {
     classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-    //classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:${palantirPluginVersion}")
+    classpath("gradle.plugin.com.palantir.gradle.docker:gradle-docker:${palantirPluginVersion}")
   }
 }
+
+//ext {
+//}
 
 subprojects {
 
@@ -27,9 +31,16 @@ subprojects {
   sourceCompatibility = 1.8
 
   repositories {
-    //mavenCentral()
-    maven { url "http://nexus:8080/nexus/content/groups/public/" }
+    mavenCentral()
+    //maven { url "http://nexus:8080/nexus/content/groups/public/" }
   }
+
+  dependencyManagement {
+    imports {
+      mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+  }
+
 }
 
 project(":lab-insurance-portfolio-common") {
@@ -46,9 +57,9 @@ project(":lab-insurance-portfolio-common") {
   }
   
   bootJar {
-	classifier = 'boot'
-	// workaround to create a simple java library instead of a spring boot jar
-	mainClassName = 'org.lab.insurance.portfolio.core.Dummy'
+  classifier = 'boot'
+  // workaround to create a simple java library instead of a spring boot jar
+  mainClassName = 'org.lab.insurance.portfolio.core.Dummy'
   }
 
   
@@ -56,16 +67,27 @@ project(":lab-insurance-portfolio-common") {
 
 project(":lab-insurance-portfolio-core") {
 
+  apply plugin: 'com.palantir.docker'
+
   dependencies {
     compile project(":lab-insurance-portfolio-common")
     compile "org.springframework.integration:spring-integration-amqp"
-    compile "org.springframework.cloud:spring-cloud-config-client"
+    //compile "org.springframework.cloud:spring-cloud-config-client"
+    compile('org.springframework.cloud:spring-cloud-starter-config')
+	compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
+  }
+  
+  docker {
+    name "labcabrera/${jar.baseName}"
+    tags 'latest'
+    files jar.archivePath
+    buildArgs(['JAR_FILE': "${jar.archiveName}"])
   }
 }
 
 project(":lab-insurance-portfolio-api") {
 
-  //apply plugin: 'com.palantir.docker'
+  apply plugin: 'com.palantir.docker'
 
   dependencies {
     compile project(":lab-insurance-portfolio-core")
@@ -74,13 +96,11 @@ project(":lab-insurance-portfolio-api") {
     compile "io.springfox:springfox-swagger-ui:${springfoxSwaggerVersion}"
   }
   
-  /*
   docker {
     name "labcabrera/${jar.baseName}"
     tags 'latest'
     files jar.archivePath
     buildArgs(['JAR_FILE': "${jar.archiveName}"])
   }
-  */
 }
 
