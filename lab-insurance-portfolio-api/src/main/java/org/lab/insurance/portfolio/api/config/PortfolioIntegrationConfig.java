@@ -1,6 +1,6 @@
 package org.lab.insurance.portfolio.api.config;
 
-import org.lab.insurance.portfolio.api.IntegrationConstants.Channels;
+import org.lab.insurance.portfolio.api.PortfolioConstants.Channels;
 import org.lab.insurance.portfolio.common.model.ContractPortfolioRelation;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Queue;
@@ -17,7 +17,7 @@ import org.springframework.integration.support.json.Jackson2JsonObjectMapper;
 import org.springframework.integration.support.json.JsonObjectMapper;
 
 @Configuration
-public class IntegrationConfig {
+public class PortfolioIntegrationConfig {
 
 	@Autowired
 	private Environment env;
@@ -40,9 +40,11 @@ public class IntegrationConfig {
 		String to = env.getProperty("queues.portfolio.creation");
 		// @formatter:off
 		return IntegrationFlows.from(MessageChannels.publishSubscribe(Channels.PortfolioInitializationRequest))
-				.transform(Transformers.toJson(mapper())).handle(Amqp.outboundGateway(amqpTemplate).routingKey(to))
-				.transform(Transformers.fromJson(ContractPortfolioRelation.class, mapper()))
-				.channel(MessageChannels.direct(Channels.PortfolioInitializationResponse)).get();
+			.transform(Transformers.toJson(mapper()))
+			.handle(Amqp.outboundGateway(amqpTemplate).routingKey(to))
+			.transform(Transformers.fromJson(ContractPortfolioRelation.class, mapper()))
+			.channel(MessageChannels.direct(Channels.PortfolioInitializationResponse))
+			.get();
 		// @formatter:on
 	}
 }

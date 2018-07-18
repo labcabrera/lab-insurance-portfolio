@@ -2,7 +2,7 @@ spring:
   application:
     name: insurance-asset-gateway
   profiles:
-    active: aws
+    active: local
   cloud:
     config:
       name: insurance-common,insurance-asset-gateway

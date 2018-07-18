@@ -1,6 +1,6 @@
 package org.lab.insurance.portfolio.api.controller;
 
-import org.lab.insurance.portfolio.api.IntegrationConstants.Channels;
+import org.lab.insurance.portfolio.api.PortfolioConstants.Channels;
 import org.lab.insurance.portfolio.api.model.EntityReference;
 import org.lab.insurance.portfolio.common.model.ContractPortfolioRelation;
 import org.springframework.integration.annotation.Gateway;
