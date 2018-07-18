@@ -1,0 +1,3 @@
+include ":lab-insurance-portfolio-common",
+        ":lab-insurance-portfolio-core",
+        ":lab-insurance-portfolio-api"

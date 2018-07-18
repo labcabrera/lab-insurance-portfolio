@@ -1,0 +1,7 @@
+= Portfolio module - Open Asset Management System
+
+:linkLabInsurance: https://github.com/labcabrera/lab-insurance
+
+== Introducción
+
+Módulo de carteras y contabilidad del proyecto {linkLabInsurance}[lab-insurance] project.
