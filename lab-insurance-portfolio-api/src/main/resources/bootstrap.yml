@@ -5,7 +5,7 @@ spring:
     active: local
   cloud:
     config:
-      name: insurance-common,insurance-asset-gateway
+      name: insurance-common,insurance-asset-gateway,insurance-amqp
 
 ---
 
