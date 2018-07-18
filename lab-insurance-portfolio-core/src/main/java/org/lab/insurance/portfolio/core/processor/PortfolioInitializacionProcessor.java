@@ -5,8 +5,8 @@ import java.util.List;
 
 import org.lab.insurance.portfolio.common.model.ContractPortfolioRelation;
 import org.lab.insurance.portfolio.common.model.Portfolio;
+import org.lab.insurance.portfolio.common.model.Portfolio.PortfolioType;
 import org.lab.insurance.portfolio.common.model.PortfolioOwner;
-import org.lab.insurance.portfolio.common.model.PortfolioType;
 import org.lab.insurance.portfolio.common.repository.ContractPortfolioRelationRepository;
 import org.lab.insurance.portfolio.common.repository.PortfolioRepository;
 import org.springframework.beans.factory.annotation.Autowired;

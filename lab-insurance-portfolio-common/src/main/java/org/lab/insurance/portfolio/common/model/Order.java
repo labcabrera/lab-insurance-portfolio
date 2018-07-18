@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.lab.insurance.portfolio.common.common.HasState;
 import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.DBRef;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import lombok.AllArgsConstructor;
@@ -39,9 +38,6 @@ public class Order implements HasState {
 	private String id;
 
 	private OrderType type;
-
-	@DBRef
-	private OrderOwner contract;
 
 	private State currentState;
 	private OrderDates dates;

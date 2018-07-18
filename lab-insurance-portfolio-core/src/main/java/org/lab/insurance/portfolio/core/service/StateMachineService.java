@@ -5,7 +5,7 @@ import java.io.Serializable;
 import org.lab.insurance.portfolio.common.common.HasId;
 import org.lab.insurance.portfolio.common.common.HasState;
 import org.lab.insurance.portfolio.common.model.State;
-import org.lab.insurance.services.common.TimestampProvider;
+import org.lab.insurance.portfolio.common.service.TimestampProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;

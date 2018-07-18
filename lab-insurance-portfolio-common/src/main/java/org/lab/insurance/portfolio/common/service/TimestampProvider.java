@@ -1,4 +1,4 @@
-package org.lab.insurance.services.common;
+package org.lab.insurance.portfolio.common.service;
 
 import java.time.LocalDateTime;
 import java.time.LocalTime;
